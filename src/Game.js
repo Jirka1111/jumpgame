@@ -28,18 +28,23 @@ Jump.Game.prototype = {
         this._player.body.gravity.y = 300;
         //koliduje s okraji displeje
         this._player.body.collideWorldBounds = true;
+        this._player.body.immovable = false;
 
         this.image = this.add.sprite(0,Jump.GAME_HEIGHT-25,"platform50");
         this.physics.enable(this.image, Phaser.Physics.ARCADE);
         this.image.anchor.setTo(0.5, 0.5);
         this.image.body.velocity.x = this.rnd.integerInRange(100, 500);
-
+        this.image.body.checkCollision.up = true;
 
 
         this.image2 = this.add.sprite(0,Jump.GAME_HEIGHT-50,"platform500");
         this.physics.enable(this.image2, Phaser.Physics.ARCADE);
         this.image2.body.velocity.x = this.rnd.integerInRange(100, 500);
         this.image2.body.collideWorldBounds = true;
+        this.image2.body.bounce.setTo(1, 1);
+        this.image2.body.checkCollision.up = true;
+        this.image2.body.immovable = true;
+
 
 	},
 	managePause: function(){
@@ -61,7 +66,7 @@ Jump.Game.prototype = {
         }
 
         this._player.body.velocity.x=0;
-        if(this.cursors.up.isDown || this._player.body.touching.image){
+        if(this.cursors.up.isDown || this._player.body.touching.image2){
             this._player.body.velocity.y = -350;
         }
 
